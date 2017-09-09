@@ -1,0 +1,62 @@
+<%= render partial: 'layouts/user_login' %>
+
+<body>
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Title:</strong>
+    <%= @page.title %>
+  </p>
+
+  <p>
+    <strong>Body:</strong>
+    <%= @page.body %>
+  </p>
+
+
+  <div class="container">
+    <h2>Posts</h2>  
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="col-sm-3">title</th>
+            <th class="col-sm-3">body</th>
+          </tr>
+        </thead>
+      </table>
+      <% @page.posts.each do |post| %>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td class="col-sm-4"><%= post.title %></td>
+              <td class="col-sm-4"><%= post.body %></td>
+              <td><%= link_to 'Show', page_post_path(page_id: @page.id,id: post.id) %></td>
+              <td><%= link_to 'Edit', edit_page_post_path(page_id: @page.id,id: post.id) %></td>
+              <td><%= link_to 'Destroy', page_post_path(page_id: @page.id,id: post.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <br>
+            </tr>
+          </tbody>
+        </table>
+    <% end %>
+  </div>
+
+  <div class="container">
+    <h2>Add Post</h2>
+    <%= form_for([@page, @page.posts.build])  do |f| %>
+      <p>
+        <%= f.label :title %><br>
+        <%= f.text_field :title %>
+      </p>
+      <p>
+        <%= f.label :body %><br>
+        <%= f.text_area :body %>
+      </p>
+      <p>
+        <%= f.submit "Create post", :id => "save-button" %>
+      </p>
+    <% end %>
+  </div>
+
+  <%= link_to 'Edit', edit_page_path(@page) %> |
+  <%= link_to 'Back', pages_path %>
+</body>
